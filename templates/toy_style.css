@@ -1,0 +1,94 @@
+* {
+    font-family: 'Gowun Dodum', sans-serif;
+}
+
+.wrap {
+    display: grid;
+    grid-template-columns: 50% 50%;
+}
+
+@media (max-width: 900px) {
+    .wrap {
+        display: grid;
+        grid-template-rows: 1fr 1fr;
+    }
+}
+
+
+.wordcloud {
+    padding: 30px;
+}
+
+.wordcloud > img {
+    margin: auto;
+    width: 400px;
+    height: 200px;
+    border-radius: 20%;
+}
+
+.mytitle {
+    width: 100%;
+    height: 250px;
+
+    background-image: linear-gradient(0deg, rgba(0, 0, 0, 0.5), rgba(0, 0, 0, 0.5)), url('https://previews.123rf.com/images/marusyachaika/marusyachaika1811/marusyachaika181100002/116537904-요한-볼프강-폰-괴테-johann-wolfgang-von-goethe-는-잉크-윤곽이-있는-벡터-초상화를-새겼습니다-독일의-작가이자-정치가-.jpg');
+    background-position: center;
+    background-size: cover;
+
+    color: white;
+
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+}
+
+.mytitle > button {
+    width: 200px;
+    height: 50px;
+
+    background-color: transparent;
+    color: white;
+
+    border-radius: 50px;
+    border: 1px solid white;
+
+    margin-top: 10px;
+}
+
+.mytitle > button:hover {
+    border: 2px solid white;
+}
+
+.mycomment {
+    color: gray;
+}
+
+.mycards {
+    margin: 20px auto 0px auto;
+    width: 95%;
+    max-width: 1200px;
+}
+
+.mypost {
+    width: 95%;
+    max-width: 500px;
+    margin: 20px auto 0px auto;
+    padding: 20px;
+    box-shadow: 0px 0px 3px 0px gray;
+
+    display: none;
+}
+
+.mybtns {
+    display: flex;
+    flex-direction: row;
+    align-items: center;
+    justify-content: center;
+
+    margin-top: 20px;
+}
+
+.mybtns > button {
+    margin-right: 10px;
+}
+

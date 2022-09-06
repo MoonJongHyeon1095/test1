@@ -1,0 +1,215 @@
+<!doctype html>
+<html lang="en">
+
+<head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+
+    <link href="https://fonts.googleapis.com/css2?family=Gowun+Dodum&display=swap" rel="stylesheet">
+
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.0.2/dist/css/bootstrap.min.css" rel="stylesheet"
+          integrity="sha384-EVSTQN3/azprG1Anm3QDgpJLIm9Nao0Yz1ztcQTwFspd3yD65VohhpuuCOmLASjC" crossorigin="anonymous">
+
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.0.2/dist/js/bootstrap.bundle.min.js"
+            integrity="sha384-MrcW6ZMFYlzcLA8Nl+NtUVF0sA7MsXsP1UyJoMp4YLEuNSfAP+JcXn/tWtIaxVXM"
+            crossorigin="anonymous"></script>
+
+    <title>토이프로젝트</title>
+
+    <style>
+        * {
+            font-family: 'Gowun Dodum', sans-serif;
+        }
+
+        .wrap {
+            display: grid;
+            grid-template-columns: 50% 50%;
+        }
+
+        @media (max-width: 900px) {
+            .wrap {
+                display: grid;
+                grid-template-rows: 1fr 1fr;
+            }
+        }
+
+
+        .wordcloud {
+            padding: 30px;
+        }
+
+        .wordcloud > img {
+            margin: auto;
+            width: 400px;
+            height: 200px;
+            border-radius: 20%;
+        }
+
+        .mytitle {
+            width: 100%;
+            height: 250px;
+
+            background-image: linear-gradient(0deg, rgba(0, 0, 0, 0.5), rgba(0, 0, 0, 0.5)), url('https://previews.123rf.com/images/marusyachaika/marusyachaika1811/marusyachaika181100002/116537904-요한-볼프강-폰-괴테-johann-wolfgang-von-goethe-는-잉크-윤곽이-있는-벡터-초상화를-새겼습니다-독일의-작가이자-정치가-.jpg');
+            background-position: center;
+            background-size: cover;
+
+            color: white;
+
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            justify-content: center;
+
+        }
+
+        .mytitle > button {
+            width: 200px;
+            height: 50px;
+
+            background-color: transparent;
+            color: white;
+
+            border-radius: 50px;
+            border: 1px solid white;
+
+            margin-top: 10px;
+        }
+
+        .mytitle > button:hover {
+            border: 2px solid white;
+        }
+
+        .mycomment {
+            color: gray;
+        }
+
+        .mycards {
+            margin: 20px auto 0px auto;
+            width: 95%;
+            max-width: 1200px;
+        }
+
+        .mypost {
+            width: 95%;
+            max-width: 500px;
+            margin: 20px auto 0px auto;
+            padding: 20px;
+            box-shadow: 0px 0px 3px 0px gray;
+
+            display: none;
+        }
+
+        .mybtns {
+            display: flex;
+            flex-direction: row;
+            align-items: center;
+            justify-content: center;
+
+            margin-top: 20px;
+        }
+
+        .mybtns > button {
+            margin-right: 10px;
+        }
+
+
+    </style>
+
+    <script>
+        $(document).ready(function () {
+            listing();
+        });
+
+        function listing() {
+            $.ajax({
+                type: 'GET',
+                url: '/toy',
+                data: {},
+                success: function (response) {
+                    let rows = response['toy']
+                    for (let i = 0; i < rows.length; i++) {
+                        let title = rows[i]['title']
+                        let image = rows[i]['image']
+                        let desc = rows[i]['desc']
+                        let comment = rows[i]['comment']
+                        let temp_html = `<div class="col">
+                                            <div class="card h-100">
+                                                <img src="${image}"
+                                                     class="card-img-top">
+                                                <div class="card-body">
+                                                    <h5 class="card-title">${title}</h5>
+                                                    <p class="card-text">${desc}</p>
+
+                                                    <p class="mycomment">${comment}</p>
+                                                </div>
+                                            </div>
+                                        </div>`
+                        $('#cards-box').append(temp_html)
+                    }
+                }
+            })
+        }
+
+        function posting() {
+            let url = $('#url').val()
+            let comment = $('#comment').val()
+
+
+            $.ajax({
+                type: 'POST',
+                url: '/toy',
+                data: {url_give: url, comment_give: comment},
+                success: function (response) {
+                    alert(response['msg'])
+                    window.location.reload()
+                }
+            });
+        }
+
+        function open_box() {
+            $('#post-box').show()
+        }
+
+        function close_box() {
+            $('#post-box').hide()
+        }
+    </script>
+</head>
+
+<body>
+<div class="mytitle">
+    <h1>괴테</h1>
+    <button onclick="open_box()">기록</button>
+</div>
+
+<div class="mypost" id="post-box">
+    <div class="form-floating mb-3">
+        <input id="url" type="email" class="form-control" placeholder="name@example.com">
+        <label>괴테의 알라딘 URL</label>
+    </div>
+
+    <div class="form-floating">
+        <textarea id="comment" class="form-control" placeholder="Leave a comment here"></textarea>
+        <label for="floatingTextarea2">코멘트</label>
+    </div>
+
+    <div class="mybtns">
+        <button onclick="posting()" type="button" class="btn btn-dark">기록하기</button>
+        <button onclick="close_box()" type="button" class="btn btn-outline-dark">닫기</button>
+    </div>
+</div>
+
+<div class="wrap">
+    <div class="mycards">
+        <div class="row row-cols-1 row-cols-md-1 g-4" id="cards-box">
+
+        </div>
+    </div>
+    <div class="wordcloud">
+        <img src="static/TheoryOfColors.png"></img>
+    </div>
+</div>
+</body>
+
+</html>
